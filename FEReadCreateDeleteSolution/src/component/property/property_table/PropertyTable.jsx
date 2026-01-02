@@ -20,7 +20,6 @@ export default function PropertyTable() {
           <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Type</th>
             <th>Price</th>
             <th>Agent Email</th>
             <th>Action</th>
@@ -32,7 +31,6 @@ export default function PropertyTable() {
             <tr key={property.id}>
               <td>{property.id}</td>
               <td>{property.name}</td>
-              <td>{property.type || "N/A"}</td>
               <td>{property.price}</td>
               <td>{property.agentEmail}</td>
               <td>

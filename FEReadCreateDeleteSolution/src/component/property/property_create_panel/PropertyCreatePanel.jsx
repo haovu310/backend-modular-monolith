@@ -13,10 +13,7 @@ export default function PropertyCreatePanel() {
         onChange={(e) => updateNewProperty(e)}>
       </input>
 
-      <input type="text" name="type"
-        placeholder="Type"
-        onChange={(e) => updateNewProperty(e)}>
-      </input>
+
 
       <input type="number" name="price"
         placeholder="Price"
