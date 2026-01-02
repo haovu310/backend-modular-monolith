@@ -1,4 +1,4 @@
-package com.example.modules.property.controller;
+package com.example.modules.property;
 
 import com.example.modules.property.model.Property;
 import com.example.modules.property.service.PropertyService;

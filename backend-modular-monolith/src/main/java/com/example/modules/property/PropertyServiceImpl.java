@@ -1,7 +1,8 @@
-package com.example.modules.property.service;
+package com.example.modules.property;
 
 import com.example.modules.property.model.Property;
-import com.example.modules.property.repository.PropertyRepository;
+import com.example.modules.property.service.PropertyService;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.modules.property.repository;
+package com.example.modules.property;
 
 import com.example.modules.property.model.Property;
 import org.springframework.data.jpa.repository.JpaRepository;
