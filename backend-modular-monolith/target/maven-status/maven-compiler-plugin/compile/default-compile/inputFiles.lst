@@ -1,0 +1,6 @@
+/Users/phantrongnguyen/coding/Lab2/EEET2580-Test-Package/backend-modular-monolith/src/main/java/com/example/MainApplication.java
+/Users/phantrongnguyen/coding/Lab2/EEET2580-Test-Package/backend-modular-monolith/src/main/java/com/example/modules/property/controller/PropertyController.java
+/Users/phantrongnguyen/coding/Lab2/EEET2580-Test-Package/backend-modular-monolith/src/main/java/com/example/modules/property/model/Property.java
+/Users/phantrongnguyen/coding/Lab2/EEET2580-Test-Package/backend-modular-monolith/src/main/java/com/example/modules/property/repository/PropertyRepository.java
+/Users/phantrongnguyen/coding/Lab2/EEET2580-Test-Package/backend-modular-monolith/src/main/java/com/example/modules/property/service/PropertyService.java
+/Users/phantrongnguyen/coding/Lab2/EEET2580-Test-Package/backend-modular-monolith/src/main/java/com/example/modules/property/service/PropertyServiceImpl.java
