@@ -1,5 +1,4 @@
-import HOST_URL from "./BackendUrlConfig";
+import BACKEND_URL from './BackendUrlConfig';
 
-const PROPERTY_URL = `${HOST_URL}/api/properties`
-
-export { PROPERTY_URL }
+export const PROPERTY_URL = `${BACKEND_URL}/api/properties`;
+export const ADMIN_URL = `${BACKEND_URL}/api/admins`;

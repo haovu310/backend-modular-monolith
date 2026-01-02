@@ -32,20 +32,24 @@ class PropertyController {
     }
 
     // Create a new property
+    // Create a new property
     @PostMapping
-    public ResponseEntity<Property> createProperty(@RequestBody Property property) {
+    public ResponseEntity<?> createProperty(@RequestBody Property property) {
         // Check if the property name has already exist
         if (propertyService.existsByName(property.getName())) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(java.util.Map.of("name", "Property name already exists"));
         }
 
         // Handle validation rule for the property creation
         if (property.getPrice() < 0 || property.getPrice() > 2000000000) {
-            return ResponseEntity.badRequest().build(); // Reject invalid price
+            return ResponseEntity.badRequest()
+                    .body(java.util.Map.of("price", "The price must range from 0 to 2 billion"));
         }
 
-        if (property.getAgentEmail() == null || !property.getAgentEmail().endsWith(".com")) {
-            return ResponseEntity.badRequest().build(); // Reject invalid email domain
+        String emailRegex = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.com$";
+        if (property.getAgentEmail() == null || !property.getAgentEmail().matches(emailRegex)) {
+            return ResponseEntity.badRequest().body(java.util.Map.of("agentEmail",
+                    "Email must follow the pattern prefix@domain, where prefix contains alphanumeric, dot, dash, or underscore, and domain ends with .com"));
         }
 
         return ResponseEntity.ok(propertyService.saveProperty(property));
@@ -80,7 +84,19 @@ class PropertyController {
 
     // Update a property by its ID using Optional
     @PutMapping("/{id}")
-    public ResponseEntity<Property> updateProperty(@PathVariable Long id, @RequestBody Property property) {
+    public ResponseEntity<?> updateProperty(@PathVariable Long id, @RequestBody Property property) {
+        // Validation for update
+        if (property.getPrice() < 0 || property.getPrice() > 2000000000) {
+            return ResponseEntity.badRequest()
+                    .body(java.util.Map.of("price", "The price must range from 0 to 2 billion"));
+        }
+
+        String emailRegex = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.com$";
+        if (property.getAgentEmail() == null || !property.getAgentEmail().matches(emailRegex)) {
+            return ResponseEntity.badRequest().body(java.util.Map.of("agentEmail",
+                    "Email must follow the pattern prefix@domain, where prefix contains alphanumeric, dot, dash, or underscore, and domain ends with .com"));
+        }
+
         return propertyService.getPropertyById(id) // 1. Find the Optional
                 .map(existingProperty -> {
                     // 2. Map/Update the fields
@@ -89,7 +105,7 @@ class PropertyController {
                     existingProperty.setPrice(property.getPrice());
                     return propertyService.saveProperty(existingProperty); // 3. Save the updated information
                 })
-                .map(ResponseEntity::ok) // 4. Return 200 OK
+                .map(saved -> ResponseEntity.ok((Object) saved)) // 4. Return 200 OK
                 .orElse(ResponseEntity.notFound().build()); // Return 404 if missing or
     }
 }

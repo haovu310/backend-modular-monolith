@@ -49,6 +49,11 @@ class PropertyServiceImpl implements PropertyService {
     @Override
     public void deleteProperty(Long id) {
         propertyRepository.deleteById(id);
+
+        // Strict Request: Check that the property does not exist after delete
+        if (propertyRepository.existsById(id)) {
+            throw new RuntimeException("Failed to delete property with ID: " + id);
+        }
     }
 
     @Override
