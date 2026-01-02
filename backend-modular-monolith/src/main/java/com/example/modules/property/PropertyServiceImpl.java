@@ -25,7 +25,7 @@ class PropertyServiceImpl implements PropertyService {
     public Page<Property> getAllProperties(int page, int size, String sortBy) {
         // Create the pagination and sorting request
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
-        
+
         // Pass the request to the repository
         return propertyRepository.findAll(pageable);
     }
