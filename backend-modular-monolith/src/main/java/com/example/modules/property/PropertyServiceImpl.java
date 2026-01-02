@@ -3,6 +3,10 @@ package com.example.modules.property;
 import com.example.modules.property.model.Property;
 import com.example.modules.property.service.PropertyService;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,20 +22,22 @@ class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
-    public List<Property> getAllProperties() {
-        return propertyRepository.findAll();
+    public Page<Property> getAllProperties(int page, int size, String sortBy) {
+        // Create the pagination and sorting request
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
+        
+        // Pass the request to the repository
+        return propertyRepository.findAll(pageable);
     }
 
     @Override
-    public List<Property> getPropertyByAgentEmail(String agentEmail) {
-        return propertyRepository.findByAgentEmail(agentEmail).orElseThrow(
-                () -> new RuntimeException("This agent doesn't have property: " + agentEmail));
+    public Optional<List<Property>> getPropertyByAgentEmail(String agentEmail) {
+        return propertyRepository.findByAgentEmail(agentEmail);
     }
 
     @Override
-    public Property getPropertyById(Long id) {
-        return propertyRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("This id doesn't have property: " + id));
+    public Optional<Property> getPropertyById(Long id) {
+        return propertyRepository.findById(id);
     }
 
     @Override
