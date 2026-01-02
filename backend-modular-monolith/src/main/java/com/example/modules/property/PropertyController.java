@@ -24,11 +24,10 @@ class PropertyController {
     // Return the list of available properties
     @GetMapping
     public ResponseEntity<Page<Property>> getAllProperties(
-        // The default page is 0, 4 properties per page, sorted by id descending order
-        @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "4") int size,
-        @RequestParam(defaultValue = "id") String sortBy
-    ) {
+            // The default page is 0, 4 properties per page, sorted by id descending order
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "4") int size,
+            @RequestParam(defaultValue = "id") String sortBy) {
         return ResponseEntity.ok(propertyService.getAllProperties(page, size, sortBy));
     }
 
@@ -56,7 +55,7 @@ class PropertyController {
     @GetMapping("/agent/{agentEmail}")
     public ResponseEntity<List<Property>> getPropertyByAgentEmail(@PathVariable String agentEmail) {
         return propertyService.getPropertyByAgentEmail(agentEmail)
-                .filter(list -> !list.isEmpty()) // Only proceed if the list has properties 
+                .filter(list -> !list.isEmpty()) // Only proceed if the list has properties
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -65,8 +64,8 @@ class PropertyController {
     @GetMapping("/{id}")
     public ResponseEntity<Property> getPropertyById(@PathVariable Long id) {
         return propertyService.getPropertyById(id)
-            .map(ResponseEntity::ok)
-            .orElse(ResponseEntity.notFound().build());
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     // Delete a property by its ID
@@ -82,15 +81,15 @@ class PropertyController {
     // Update a property by its ID using Optional
     @PutMapping("/{id}")
     public ResponseEntity<Property> updateProperty(@PathVariable Long id, @RequestBody Property property) {
-        return propertyService.getPropertyById(id) // 1. Find the Optional 
-            .map(existingProperty -> {
-                // 2. Map/Update the fields
-                existingProperty.setName(property.getName());
-                existingProperty.setAgentEmail(property.getAgentEmail());
-                existingProperty.setPrice(property.getPrice());
-                return propertyService.saveProperty(existingProperty); // 3. Save the updated information
-            })
-            .map(ResponseEntity::ok) // 4. Return 200 OK
-            .orElse(ResponseEntity.notFound().build()); // Return 404 if missing or
+        return propertyService.getPropertyById(id) // 1. Find the Optional
+                .map(existingProperty -> {
+                    // 2. Map/Update the fields
+                    existingProperty.setName(property.getName());
+                    existingProperty.setAgentEmail(property.getAgentEmail());
+                    existingProperty.setPrice(property.getPrice());
+                    return propertyService.saveProperty(existingProperty); // 3. Save the updated information
+                })
+                .map(ResponseEntity::ok) // 4. Return 200 OK
+                .orElse(ResponseEntity.notFound().build()); // Return 404 if missing or
     }
 }
