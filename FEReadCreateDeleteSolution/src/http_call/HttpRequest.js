@@ -1,29 +1,23 @@
-export default async function sendHttpRequest(
-    url,
-    method = 'GET',
-    body = null
-) {
-
-    let response = await fetch(url, {
+// src/http_call/HttpRequest.js
+export const httpRequest = async (url, method, data = null) => {
+    const options = {
         method: method,
-        body: body,
         headers: {
-            "Content-Type": "application/json"
-        }
-    })
+            'Content-Type': 'application/json',
+        },
+    };
 
-    let jsonData = ""
+    // If we are sending data (like in a POST or PUT), we add it to the body
+    if (data) {
+        options.body = JSON.stringify(data);
+    }
+
+    const response = await fetch(url, options);
     
-    try {
-        jsonData = await response.json()
-    } catch {
-        jsonData = "{}"
+    // Level 3 requirement: Return the status so the UI can check for errors
+    if (!response.ok) {
+        return response; 
     }
-
-    return {
-        json: jsonData,
-        status: response.status,
-        responseHeader: response.headers
-    }
-}
-
+    
+    return response.json();
+};
